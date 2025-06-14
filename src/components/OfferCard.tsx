@@ -1,20 +1,20 @@
-// src/components/OfferCard.tsx
-import { ReactNode } from 'react'
+import React, { ReactNode } from 'react'
 
 interface OfferCardProps {
   icon: ReactNode
   title: string
-  desc: string
+  // теперь — ReactNode, а не string
+  desc: ReactNode
 }
 
 export default function OfferCard({ icon, title, desc }: OfferCardProps) {
   return (
     <div className="card">
-      <div style={{ fontSize: '2rem', marginBottom: '1rem' }}>
+      <div style={{ marginBottom: '0.75rem', color: 'var(--clr-accent1)' }}>
         {icon}
       </div>
-      <h3>{title}</h3>
-      <p>{desc}</p>
+      <h3 style={{ marginBottom: '0.5rem' }}>{title}</h3>
+      <p style={{ margin: 0 }}>{desc}</p>
     </div>
   )
 }
