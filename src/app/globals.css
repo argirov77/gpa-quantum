@@ -1,130 +1,189 @@
 /* =========================================================================
-   src/app/globals.css — полный Hi-Tech / Quantum стиль + softer light theme
+   src/app/globals.css — Полный стиль Teletron с адаптивной шапкой
+   + интересным паттерном на фоне
    ========================================================================= */
 
 /* 1) Шрифты */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Orbitron:wght@700&display=swap');
 
-/* 2) Основные переменные (Dark by default) */
+/* 2) CSS-переменные (тёмная тема по умолчанию) */
 :root {
   --clr-text:       #eceff1;
-  --clr-start:      #1f3457;
-  --clr-end:        #2e5a88;
-  --clr-accent1:    #00d4ff;
-  --clr-accent2:    #ff6b6b;
+  --clr-bg-start:   #0f1a2b;
+  --clr-bg-end:     #001f3f;
+  --clr-accent1:    #00e5ff;
+  --clr-accent2:    #ff4081;
   --card-bg:        rgba(255,255,255,0.05);
   --card-border:    rgba(255,255,255,0.15);
   --transition:     0.4s ease-in-out;
 }
 
-/* 3) Light theme — менее «белый», больше серо-голубого */
+/* 3) Улучшенная светлая тема */
 body.light {
-  --clr-text:       #2c3e50;
-  --clr-start:      #e2e6eb;  /* от нежно-серого */
-  --clr-end:        #d1d9df;  /* к чуть более тёмному серому */
-  --clr-accent1:    #FF8F00;
-  --clr-accent2:    #D81B60;
-  --card-bg:        rgba(0,0,0,0.02);
-  --card-border:    rgba(0,0,0,0.10);
+  --clr-text:       #1f2a38;
+  --clr-bg-start:   #d0d9e4;
+  --clr-bg-end:     #b8cbd8;
+  --clr-accent1:    #006bbd;
+  --clr-accent2:    #d84315;
+  --card-bg:        rgba(255,255,255,0.12);
+  --card-border:    rgba(0,0,0,0.2);
+}
+body.light .header {
+  background: rgba(255,255,255,0.9);
+}
+body.light .nav-mobile {
+  background: rgba(255,255,255,0.95);
 }
 
-/* 4) Reset */
-* { margin:0; padding:0; box-sizing:border-box }
+/* 4) Reset & Base */
+* {
+  margin: 0; padding: 0; box-sizing: border-box;
+}
 body {
-  font-family:'Inter',sans-serif;
+  font-family: 'Inter', sans-serif;
   color: var(--clr-text);
-  min-height:100vh;
-  overflow-x:hidden;
+  min-height: 100vh;
+  overflow-x: hidden;
   scroll-behavior: smooth;
 
-  /* multilayer tectonic bg */
+  /* ——— Интересный паттерн из точек + диагоналей ——— */
+  background-color: var(--clr-bg-start);
   background-image:
-    linear-gradient(45deg, var(--clr-start), var(--clr-end)),
-    repeating-linear-gradient(135deg, rgba(255,255,255,0.05) 0, rgba(255,255,255,0.05) 1px, transparent 1px, transparent 40px),
-    url("data:image/svg+xml;utf8,\
-<svg xmlns='http://www.w3.org/2000/svg' width='60' height='52'>\
-<polygon points='30,0 60,15 60,45 30,60 0,45 0,15' fill='none' stroke='rgba(255,255,255,0.04)' stroke-width='1'/>\
-</svg>"),
-    radial-gradient(circle at center, transparent 30%, rgba(255,255,255,0.03) 31%, transparent 32%),
-    url("data:image/svg+xml;utf8,\
-<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100'>\
-<filter id='noise'><feTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/></filter>\
-<rect width='100%' height='100%' filter='url(%23noise)' opacity='0.05'/>\
-</svg>");
-  background-repeat: no-repeat, repeat, repeat, repeat, no-repeat;
-  background-size: cover, 40px 40px, 60px 52px, 200% 200%, cover;
-  background-attachment: fixed, fixed, fixed, fixed, fixed;
+    /* точечная сетка */
+    radial-gradient(var(--clr-accent1) 1px, transparent 0),
+    /* тонкие диагональные линии */
+    repeating-linear-gradient(
+      45deg,
+      rgba(var(--clr-text), 0.05) 0px,
+      rgba(var(--clr-text), 0.05) 1px,
+      transparent 1px,
+      transparent 20px
+    );
+  background-size: 20px 20px, 40px 40px;
+  background-attachment: fixed;
 }
 
 /* 5) Header */
 .header {
-  position:fixed; top:0; left:0; right:0; z-index:100;
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
   background: rgba(0,0,0,0.6);
   backdrop-filter: blur(8px);
-  padding:1rem 2rem;
-  box-shadow:0 2px 8px rgba(0,0,0,0.5);
+  padding: 1rem 2rem;
+  transition: background var(--transition);
 }
-.header .container { display:flex; justify-content:space-between; align-items:center }
+.header .container {
+  display: flex; justify-content: space-between; align-items: center;
+}
+/* Logo */
 .header a.logo {
-  font-size:1.5rem;
-  color:#fff;
-  text-shadow:0 2px 4px rgba(0,0,0,0.8);
-  text-decoration:none;
-  font-weight:600;
-}
-.header nav a {
-  margin-left:1.5rem;
-  color:#fff;
-  text-decoration:none;
-  font-weight:600;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.5rem;
+  color: var(--clr-text);
+  text-decoration: none;
+  font-weight: 700;
   transition: color var(--transition);
-  text-shadow:0 1px 3px rgba(0,0,0,0.8);
 }
-.header nav a:hover,
-.header nav a.active { color: var(--clr-accent2) }
-.header button {
-  margin-left:1.5rem;
-  background: rgba(255,255,255,0.1);
-  border:1px solid rgba(255,255,255,0.5);
-  border-radius:6px;
-  padding:0.25rem;
-  cursor:pointer;
-  color:#fff;
-  transition: background var(--transition), border-color var(--transition);
-}
-.header button:hover {
-  background: rgba(255,255,255,0.2);
-  border-color: #fff;
+.header a.logo.active {
+  color: var(--clr-accent1);
 }
 
-/* 6) Hero */
+/* 6) Desktop nav */
+.nav-desktop {
+  display: flex; align-items: center; gap: 1.5rem;
+}
+.nav-desktop a {
+  color: var(--clr-text);
+  text-decoration: none;
+  font-weight: 600;
+  transition: color var(--transition);
+}
+.nav-desktop a.active,
+.nav-desktop a:hover {
+  color: var(--clr-accent2);
+}
+.nav-desktop .theme-toggle {
+  background: none; border: none; color: var(--clr-text);
+  cursor: pointer; transition: color var(--transition);
+}
+@media (max-width: 768px) {
+  .nav-desktop { display: none; }
+}
+
+/* 7) Mobile toggle */
+.mobile-toggle {
+  display: none; background: none; border: none;
+  color: var(--clr-text); cursor: pointer;
+}
+@media (max-width: 768px) {
+  .mobile-toggle { display: block; }
+}
+
+/* 8) Mobile nav drawer */
+.nav-mobile {
+  display: none; flex-direction: column;
+  position: fixed; top: 100%; left:0; right:0;
+  padding: 1.5rem 2rem; gap: 1.5rem;
+  overflow: hidden; max-height: 0;
+  transition: max-height 0.3s ease, background var(--transition);
+}
+.nav-mobile.open {
+  display: flex; max-height: 400px;
+}
+.nav-mobile a {
+  color: var(--clr-text);
+  text-decoration: none; font-size:1.1rem; font-weight:600;
+  transition: color var(--transition);
+}
+.nav-mobile a.active,
+.nav-mobile a:hover {
+  color: var(--clr-accent2);
+}
+.nav-mobile .theme-toggle {
+  background: none; border: none; color: var(--clr-text);
+  cursor: pointer; align-self: flex-start;
+}
+
+/* 9) Hero */
 .hero {
-  position:relative;
-  height:90vh;
-  overflow:hidden;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  text-align:center;
+  position: relative; height: 90vh;
+  display: flex; align-items: center; justify-content: center;
+  text-align: center;
+}
+.hero::before {
+  content:''; position:absolute; inset:0; z-index:0;
+  background: rgba(0,0,0,0.4); pointer-events:none;
+}
+body.light .hero::before {
+  background: rgba(255,255,255,0.5);
 }
 .hero video {
-  position:absolute; top:0; left:0;
-  width:100%; height:100%; object-fit:cover;
-  z-index:0; filter: brightness(0.5);
+  position:absolute; top:0; left:0; width:100%; height:100%;
+  object-fit:cover; z-index:-1; filter:brightness(0.5);
 }
-.hero .container { position:relative; z-index:1 }
+.hero .container {
+  position:relative; z-index:1;
+}
 
-/* 7) Fade-in */
-.fade-in { opacity:0; transform:translateY(20px); transition: opacity var(--transition), transform var(--transition); }
-.fade-in.visible { opacity:1; transform:none }
+/* 10) Fade-in util */
+.fade-in {
+  opacity:0; transform: translateY(20px);
+  transition: opacity var(--transition), transform var(--transition);
+}
+.fade-in.visible {
+  opacity:1; transform:none;
+}
 
-/* 8) Layout & Utility */
-.container { max-width:1200px; margin:0 auto; padding:0 1rem }
-.section { position:relative; padding:4rem 0; overflow:hidden; scroll-snap-align:start }
+/* 11) Layout wrappers */
+.container {
+  max-width:1200px; margin:0 auto; padding:0 1rem;
+}
+.section {
+  padding:4rem 0;
+}
 
-/* 9) Grid & Cards */
+/* 12) Grid & Cards */
 .grid-3 {
-  display:grid;
+  display: grid;
   grid-template-columns: repeat(auto-fit,minmax(240px,1fr));
   gap:2rem;
 }
@@ -135,27 +194,24 @@ body {
   padding:1.5rem;
   text-align:center;
   transition: transform var(--transition), border-color var(--transition), background var(--transition);
-  cursor:default;
 }
 .card:hover {
-  transform:translateY(-6px);
+  transform: translateY(-6px);
   border-color: var(--clr-accent1);
   background: rgba(0,212,255,0.1);
 }
 
-/* 10) Typography & Buttons */
+/* 13) Typography & Buttons */
 h1,h2,h3 {
   font-family:'Orbitron',sans-serif;
   color: var(--clr-accent1);
   margin-bottom:1rem;
 }
-h1 { font-size:3rem }
-h2 { font-size:2.25rem }
+h1 { font-size:3rem; }
+h2 { font-size:2.25rem; }
 p {
-  font-size:1rem;
-  line-height:1.6;
-  margin-bottom:1.5rem;
-  color:rgba(var(--clr-text),0.9);
+  font-size:1rem; line-height:1.6; margin-bottom:1.5rem;
+  color: rgba(var(--clr-text),0.9);
 }
 .btn {
   padding:.75rem 1.5rem;
@@ -169,27 +225,24 @@ p {
 }
 .btn:hover {
   background: var(--clr-accent1);
-  color:#000;
-  transform:scale(1.05);
+  color: #000;
+  transform: scale(1.05);
 }
 
-/* 11) Section PNG backgrounds */
-.bg-advertisers-pattern { background:url('/1.png') center/cover no-repeat }
-.bg-affiliates-pattern  { background:url('/2.png') center/cover no-repeat }
-.bg-metrics-pattern     { background:url('/3.png') center/cover no-repeat }
+/* 14) Section PNG backgrounds */
 
-/* 12) Footer */
+
+/* 15) Footer */
 .footer {
-  padding:2rem 1rem;
-  text-align:center;
-  background: rgba(31,64,104,0.75);
+  padding:2rem 1rem; text-align:center;
+  background:rgba(31,64,104,0.75);
   border-top:1px solid rgba(236,239,241,0.2);
   font-size:.875rem;
 }
 
-/* 13) Responsive */
+/* 16) Responsive tweaks */
 @media (max-width:768px) {
-  h1 { font-size:2.5rem }
-  h2 { font-size:1.75rem }
-  .grid-3 { grid-template-columns:1fr }
+  h1 { font-size:2.5rem; }
+  h2 { font-size:1.75rem; }
+  .grid-3 { grid-template-columns:1fr; }
 }
