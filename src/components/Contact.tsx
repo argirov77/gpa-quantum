@@ -27,8 +27,8 @@ export default function Contact() {
       title: 'Address',
       desc: (
         <>
-          24 Station Square, Suite 16<br />
-          Inverness IV1 1LD<br />
+          5 South Charlotte Street<br />
+          Edinburgh EH2 4AN<br />
           Scotland, UK
         </>
       ),
